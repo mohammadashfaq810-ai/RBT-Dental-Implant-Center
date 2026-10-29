@@ -1,0 +1,6 @@
+{
+  "name": "RBT Dental & Implant Center",
+  "description": "Modern dental implant, digital dentistry, and cosmetic dental clinic in DHA Phase 5, Lahore led by Dr. Rao Bazil Taimur.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

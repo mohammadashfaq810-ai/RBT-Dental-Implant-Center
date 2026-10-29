@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function () {
+        function makeWritableFetch(target) {
+          if (!target) return;
+          try {
+            var desc = Object.getOwnPropertyDescriptor(target, 'fetch');
+            if (desc && desc.get && !desc.set && desc.configurable) {
+              var currentFetch = window.fetch.bind(window);
+              Object.defineProperty(target, 'fetch', {
+                configurable: true,
+                enumerable: desc.enumerable,
+                get: function () {
+                  return currentFetch;
+                },
+                set: function (fn) {
+                  if (typeof fn === 'function') {
+                    currentFetch = fn;
+                  }
+                },
+              });
+            }
+          } catch (_e) {}
+        }
+
+        makeWritableFetch(window);
+        if (typeof Window !== 'undefined' && Window.prototype) {
+          makeWritableFetch(Window.prototype);
+        }
+
+        window.addEventListener(
+          'error',
+          function (event) {
+            var src = (event && event.filename) || '';
+            var msg = (event && event.message) || '';
+            if (
+              src.indexOf('chrome-extension://') === 0 ||
+              src.indexOf('moz-extension://') === 0 ||
+              msg.indexOf('Cannot set property fetch of #<Window>') !== -1
+            ) {
+              event.stopImmediatePropagation();
+              event.preventDefault();
+            }
+          },
+          true
+        );
+
+        window.addEventListener(
+          'unhandledrejection',
+          function (event) {
+            var reasonStr = String((event && event.reason) || '');
+            if (
+              reasonStr.indexOf('chrome-extension://') !== -1 ||
+              reasonStr.indexOf('Cannot set property fetch of #<Window>') !== -1
+            ) {
+              event.stopImmediatePropagation();
+              event.preventDefault();
+            }
+          },
+          true
+        );
+      })();
+    </script>
+    <title>RBT Dental &amp; Implant Center – Dentist &amp; Implants in DHA Lahore</title>
+    <meta
+      name="description"
+      content="Visit RBT Dental &amp; Implant Center in DHA Phase 5, Lahore. Led by Dr. Rao Bazil Taimur for guided dental implants, zirconia crowns, veneers, aligners &amp; painless root canals."
+    />
+    <meta
+      name="keywords"
+      content="dental implants Lahore, dentist in DHA Phase 5 Lahore, RBT Dental and Implant Center, Dr Rao Bazil Taimur, guided implant surgery Lahore, All-on-4 implants Lahore, zirconia crowns Lahore, cosmetic dentistry Lahore, painless root canal Lahore, invisible aligners Lahore"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="RBT Dental &amp; Implant Center" />
+    <meta
+      property="og:title"
+      content="RBT Dental &amp; Implant Center – Dentist &amp; Implants in DHA Lahore"
+    />
+    <meta
+      property="og:description"
+      content="Modern CBCT-guided dental implants, cosmetic veneers, zirconia crowns, clear aligners, and painless dental care by Dr. Rao Bazil Taimur in DHA Phase 5, Lahore."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="RBT Dental &amp; Implant Center – Dentist &amp; Implants in DHA Lahore"
+    />
+    <meta
+      name="twitter:description"
+      content="5.0-rated modern dental &amp; implant clinic in DHA Phase 5, Lahore led by Dr. Rao Bazil Taimur. Book your consultation today."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Dentist",
+        "name": "RBT Dental & Implant Center",
+        "description": "RBT Dental & Implant Center is a modern dental clinic in DHA Phase 5, Lahore, specializing in CBCT-guided dental implants, All-on-4 and All-on-6 implants, zirconia crowns, veneers, invisible aligners, and painless root canal treatment led by Dr. Rao Bazil Taimur.",
+        "telephone": "+92-313-3337726",
+        "priceRange": "$$",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "First Floor, Building 14A, A Block Sector A, Phase 5 D.H.A.",
+          "addressLocality": "Lahore",
+          "addressRegion": "Punjab",
+          "addressCountry": "PK"
+        },
+        "founder": {
+          "@type": "Person",
+          "name": "Dr. Rao Bazil Taimur",
+          "jobTitle": "Lead Implantologist & Dental Surgeon"
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+              "Sunday"
+            ],
+            "opens": "10:00",
+            "closes": "21:00"
+          }
+        ],
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "5.0",
+          "reviewCount": "34",
+          "bestRating": "5"
+        },
+        "medicalSpecialty": [
+          "Implant Dentistry",
+          "Cosmetic Dentistry",
+          "Endodontics",
+          "Orthodontics",
+          "Prosthodontics"
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
